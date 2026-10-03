@@ -1,0 +1,23 @@
+name: Extract Coin Rush
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract project
+        run: |
+          mkdir -p CoinRushProject
+          unzip -o CoinRushAndroid.zip -d CoinRushProject
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add CoinRushProject
+          git commit -m "Extract Coin Rush project" || exit 0
+          git push
